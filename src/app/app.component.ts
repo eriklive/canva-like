@@ -119,6 +119,10 @@ export class AppComponent implements AfterViewInit {
     this._stage = params;
   }
 
+  public get objetoSelecionado(): boolean {
+    return this.currentTarget > -1;
+  }
+
   public resetCanva() {
     this.stage = new Konva.Stage({
       container: 'container', // id of container <div>

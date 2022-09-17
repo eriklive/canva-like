@@ -1,31 +1,54 @@
-<section>
-  <div id="container"></div>
+<div class="row">
+  <section class="col-md-4">
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn btn-primary" (click)="resetCanva()">
+          Limpar tela
+        </button>
+        <button
+          class="btn btn-primary"
+          (click)="destroy()"
+          *ngIf="objetoSelecionado"
+        >
+          Apagar objeto
+        </button>
+      </div>
 
-  <button (click)="resetCanva()">Reset</button>
-
-  <br />
-  <br />
-  <button (click)="adicionar('CIRCULO')">Circulo</button>
-  <button (click)="adicionar('ESCUDO')">Escudo</button>
-
-  <br />
-  <br />
-  <input
-    type="color"
-    id="html5colorpicker"
-    [formControl]="colorControl"
-    value="#ff0000"
-  />
-  <button (click)="destroy()">destroy</button>
-
-  <br />
-  <br />
-
-  <button (click)="moveDown()">Move down</button>
-  <button (click)="moveUp()">Move up</button>
-
-  <br />
-  <br />
-  <button (click)="download()">Log JSON</button>
-  <button (click)="exportImage()">download</button>
-</section>
+      <div class="col-xs-12">
+        <button class="btn btn-primary" (click)="adicionar('CIRCULO')">
+          Circulo
+        </button>
+        <button class="btn btn-primary" (click)="adicionar('ESCUDO')">
+          Escudo
+        </button>
+      </div>
+      <div class="col-xs-12" *ngIf="objetoSelecionado">
+        <input
+          type="color"
+          id="html5colorpicker"
+          [formControl]="colorControl"
+          value="#ff0000"
+        />
+      </div>
+      <div class="col-xs-12" *ngIf="objetoSelecionado">
+        <button type="button" class="btn btn-primary" (click)="moveDown()">
+          Move down
+        </button>
+        <button type="button" class="btn btn-primary" (click)="moveUp()">
+          Move up
+        </button>
+      </div>
+      <div class="col-xs-12">
+        <button type="button" class="btn btn-primary" (click)="download()">
+          Log JSON
+        </button>
+        <button type="button" class="btn btn-primary" (click)="exportImage()">
+          download
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="col-xs-12 col-md-8">
+    <div id="container"></div>
+  </section>
+</div>
