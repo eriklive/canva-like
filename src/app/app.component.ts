@@ -147,13 +147,16 @@ export class AppComponent implements AfterViewInit {
     this.stage.add(forma.layer);
 
     const addTransformer = (e: any) => {
-      // Callback para sempre que selecionarem uma forma, a gente pegar qual o id dado àquela forma
-      this.currentTarget = Number(e.target.attrs.id);
+      if (this.currentTarget === -1) {
+        // Callback para sempre que selecionarem uma forma, a gente pegar qual o id dado àquela forma
+        this.currentTarget = Number(e.target.attrs.id);
 
-      this._addTransformer(forma.layer, forma.objeto);
-      this._updateColorPicker(e);
-
-      console.log(e);
+        this._addTransformer(forma.layer, forma.objeto);
+        this._updateColorPicker(e);
+      } else {
+        this.transformer.nodes([]);
+        this.currentTarget = -1;
+      }
     };
 
     forma.layer.on('click', addTransformer);
@@ -189,7 +192,6 @@ export class AppComponent implements AfterViewInit {
 
   public destroy() {
     const layer = this._findLayer();
-
     layer.remove();
   }
 
@@ -219,15 +221,20 @@ export class AppComponent implements AfterViewInit {
 
   public exportImage() {
     try {
+      this.transformer.nodes([]);
+
       var dataURL = this.stage.toDataURL({
         pixelRatio: 2,
       });
 
       var link = document.createElement('a');
+
       link.download = 'name.jpg';
       link.href = dataURL;
       document.body.appendChild(link);
+
       link.click();
+
       document.body.removeChild(link);
     } catch (e) {
       console.log(e);
