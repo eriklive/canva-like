@@ -1,54 +1,74 @@
-<div class="row">
-  <section class="col-md-4">
-    <div class="row">
-      <div class="col-xs-12">
-        <button class="btn btn-primary" (click)="resetCanva()">
-          Limpar tela
-        </button>
-        <button
-          class="btn btn-primary"
-          (click)="destroy()"
-          *ngIf="objetoSelecionado"
-        >
-          Apagar objeto
-        </button>
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <section>
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-primary" (click)="add('CIRCULO')">
+            Circle
+          </button>
+          <button class="btn btn-primary" (click)="add('ESCUDO')">
+            Shield
+          </button>
+        </div>
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-primary" (click)="download()">
+            Log JSON
+          </button>
+          <button type="button" class="btn btn-primary" (click)="exportImage()">
+            download
+          </button>
+        </div>
       </div>
-
-      <div class="col-xs-12">
-        <button class="btn btn-primary" (click)="adicionar('CIRCULO')">
-          Circulo
-        </button>
-        <button class="btn btn-primary" (click)="adicionar('ESCUDO')">
-          Escudo
-        </button>
+    </section>
+  </mat-drawer>
+  <mat-drawer-content>
+    <section>
+      <div class="row">
+        <div class="col-xs-12 linha-acoes">
+          <input
+            type="color"
+            id="html5colorpicker"
+            [formControl]="colorControl"
+            value="#ff0000"
+            [disabled]="!objetoSelecionado"
+          />
+          <button
+            [disabled]="!objetoSelecionado"
+            mat-raised-button
+            color="primary"
+            (click)="moveDown()"
+          >
+            <mat-icon>expand_more</mat-icon>
+          </button>
+          <button
+            [disabled]="!objetoSelecionado"
+            mat-raised-button
+            color="primary"
+            (click)="moveUp()"
+          >
+            <mat-icon>expand_less</mat-icon>
+          </button>
+          <button
+            [disabled]="!objetoSelecionado"
+            mat-raised-button
+            color="primary"
+            (click)="destroy()"
+          >
+            Apagar objeto
+          </button>
+        </div>
+        <div class="col-xs-12"><div id="container"></div></div>
+        <div class="col-xs-12">
+          <button
+            [disabled]="layers.length === 0"
+            mat-raised-button
+            color="primary"
+            (click)="resetCanva()"
+          >
+            Limpar tela
+          </button>
+        </div>
       </div>
-      <div class="col-xs-12" *ngIf="objetoSelecionado">
-        <input
-          type="color"
-          id="html5colorpicker"
-          [formControl]="colorControl"
-          value="#ff0000"
-        />
-      </div>
-      <div class="col-xs-12" *ngIf="objetoSelecionado">
-        <button type="button" class="btn btn-primary" (click)="moveDown()">
-          Move down
-        </button>
-        <button type="button" class="btn btn-primary" (click)="moveUp()">
-          Move up
-        </button>
-      </div>
-      <div class="col-xs-12">
-        <button type="button" class="btn btn-primary" (click)="download()">
-          Log JSON
-        </button>
-        <button type="button" class="btn btn-primary" (click)="exportImage()">
-          download
-        </button>
-      </div>
-    </div>
-  </section>
-  <section class="col-xs-12 col-md-8">
-    <div id="container"></div>
-  </section>
-</div>
+    </section>
+  </mat-drawer-content>
+</mat-drawer-container>

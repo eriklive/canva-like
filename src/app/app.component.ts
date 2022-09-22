@@ -124,16 +124,18 @@ export class AppComponent implements AfterViewInit {
   }
 
   public resetCanva() {
+    this.currentTarget = -1;
+
     this.stage = new Konva.Stage({
       container: 'container', // id of container <div>
       width: 500,
       height: 500,
     });
+
+    this.layers = [];
   }
 
-  public adicionar(figuraParaDesenhar: string) {
-    // const layer = new Konva.Layer();
-
+  public add(figuraParaDesenhar: string) {
     var forma: Escudo | Circulo;
 
     switch (figuraParaDesenhar) {
