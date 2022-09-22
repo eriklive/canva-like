@@ -3,25 +3,26 @@ import Konva from 'konva';
 
 export default class KonvaDefault {
   private _layer: Konva.Layer = new Konva.Layer();
-  private _objects: Array<Konva.Path> = [];
+  private _objects: Array<Konva.Path | Konva.Text> = [];
   private _colors: Array<FormControl> = [];
 
   addLayer(layer: Konva.Layer) {
     this._layer = layer;
+    console.log(layer);
 
     if (layer.hasChildren()) {
       layer.children?.forEach((child, childIndex) => {
         const colorControl = new FormControl(child.attrs.fill);
-        console.log(child.attrs.fill);
         colorControl.valueChanges.subscribe((update) => {
           this._changeColor(update, childIndex);
         });
+
         this._colors.push(colorControl);
       });
     }
   }
 
-  addObject(object: Konva.Path) {
+  addObject(object: Konva.Path | Konva.Text) {
     this._objects.push(object);
   }
 

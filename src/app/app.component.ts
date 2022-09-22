@@ -3,6 +3,7 @@ import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import GoogleLogo from 'src/shared/classes/GoogleLogo';
 import KonvaDefault from 'src/shared/classes/KonvaDefault';
+import KonvaText from 'src/shared/classes/KonvaText';
 import Shield from 'src/shared/classes/Shield';
 
 @Component({
@@ -46,38 +47,83 @@ export class AppComponent implements AfterViewInit {
     this.layers = [];
   }
 
-  public add(figuraParaDesenhar: string) {
-    var forma: KonvaDefault;
+  public addText() {
+    var layer = new Konva.Layer({
+      draggable: true,
+    });
 
-    switch (figuraParaDesenhar) {
-      case 'ESCUDO':
-        forma = new Shield(this.indexes++);
-        break;
-      case 'GOOGLE':
-        forma = new GoogleLogo(this.indexes++);
-        break;
-      default:
-        return;
-    }
+    var simpleText = new Konva.Text({
+      x: 2,
+      y: 15,
+      text: 'Simple Text',
+      fontSize: 30,
+      fontFamily: 'Calibri',
+      fill: '#fffff',
+      draggable: false,
+    });
 
-    this.layers.push(forma.layer);
-    this.stage.add(forma.layer);
-    this.objects.push(forma);
+    layer.add(simpleText);
+
+    this.layers.push(layer);
+    this.stage.add(layer);
 
     const addTransformer = (e: any) => {
       if (this.currentTarget === -1) {
         // Callback para sempre que selecionarem uma forma, a gente pegar qual o id dado àquela forma
         this.currentTarget = Number(e.target.attrs.id);
 
-        this._addTransformer(forma.layer, forma.objects);
+        layer.add(this.transformer);
+        this.transformer.nodes([simpleText]);
       } else {
         this.transformer.nodes([]);
         this.currentTarget = -1;
       }
     };
 
-    forma.layer.on('click', addTransformer);
-    forma.layer.draw();
+    layer.on('click', addTransformer);
+    layer.draw();
+  }
+
+  public add(figuraParaDesenhar: string) {
+    var object: KonvaDefault;
+
+    switch (figuraParaDesenhar) {
+      case 'ESCUDO':
+        object = new Shield(this.indexes++);
+        break;
+      case 'GOOGLE':
+        object = new GoogleLogo(this.indexes++);
+        break;
+
+      case 'TEXT':
+        object = new KonvaText(this.indexes++);
+        break;
+      default:
+        return;
+    }
+
+    this.layers.push(object.layer);
+    this.stage.add(object.layer);
+    this.objects.push(object);
+
+    this._configTransform(object);
+  }
+
+  private _configTransform(object: KonvaDefault) {
+    const addTransformer = (e: any) => {
+      if (this.currentTarget === -1) {
+        // Callback para sempre que selecionarem uma forma, a gente pegar qual o id dado àquela forma
+        this.currentTarget = Number(e.target.attrs.id);
+
+        this._addTransformer(object.layer, object.objects);
+      } else {
+        this.transformer.nodes([]);
+        this.currentTarget = -1;
+      }
+    };
+
+    object.layer.on('click', addTransformer);
+    object.layer.draw();
   }
 
   private _addTransformer(layer: Layer, formas: Array<any>) {

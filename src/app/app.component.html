@@ -1,29 +1,46 @@
 <mat-drawer-container>
   <mat-drawer mode="side" opened>
-    <section>
-      <div class="row">
-        <div class="col-xs-12 selectors-images">
-          <img
-            src="assets/svgs/shield-one.svg"
-            alt=""
-            (click)="add('ESCUDO')"
-          />
-          <img
-            src="assets/svgs/google-g-logo.svg"
-            alt=""
-            (click)="add('GOOGLE')"
-          />
-        </div>
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-primary" (click)="download()">
-            Log JSON
-          </button>
-          <button type="button" class="btn btn-primary" (click)="exportImage()">
-            download
-          </button>
-        </div>
-      </div>
-    </section>
+    <mat-tab-group>
+      <mat-tab label="Figures">
+        <section>
+          <div class="row">
+            <div class="col-xs-12 selectors-images">
+              <img
+                src="assets/svgs/shield-one.svg"
+                alt=""
+                (click)="add('ESCUDO')"
+              />
+              <img
+                src="assets/svgs/google-g-logo.svg"
+                alt=""
+                (click)="add('GOOGLE')"
+              />
+            </div>
+            <div class="col-xs-12">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="download()"
+              >
+                Log JSON
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="exportImage()"
+              >
+                download
+              </button>
+            </div>
+          </div>
+        </section>
+      </mat-tab>
+      <mat-tab label="Text">
+        <button mat-raised-button color="primary" (click)="addText()">
+          add text
+        </button>
+      </mat-tab>
+    </mat-tab-group>
   </mat-drawer>
   <mat-drawer-content>
     <section>
