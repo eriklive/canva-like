@@ -22,3 +22,11 @@ button {
 .linha-acoes {
   height: 100px;
 }
+
+.selectors-images {
+  & > img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+  }
+}

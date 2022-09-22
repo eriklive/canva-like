@@ -2,13 +2,17 @@
   <mat-drawer mode="side" opened>
     <section>
       <div class="row">
-        <div class="col-xs-12">
-          <button class="btn btn-primary" (click)="add('GOOGLE')">
-            Google
-          </button>
-          <button class="btn btn-primary" (click)="add('ESCUDO')">
-            Shield
-          </button>
+        <div class="col-xs-12 selectors-images">
+          <img
+            src="assets/svgs/shield-one.svg"
+            alt=""
+            (click)="add('ESCUDO')"
+          />
+          <img
+            src="assets/svgs/google-g-logo.svg"
+            alt=""
+            (click)="add('GOOGLE')"
+          />
         </div>
         <div class="col-xs-12">
           <button type="button" class="btn btn-primary" (click)="download()">
