@@ -3,8 +3,8 @@
     <section>
       <div class="row">
         <div class="col-xs-12">
-          <button class="btn btn-primary" (click)="add('CIRCULO')">
-            Circle
+          <button class="btn btn-primary" (click)="add('GOOGLE')">
+            Google
           </button>
           <button class="btn btn-primary" (click)="add('ESCUDO')">
             Shield
@@ -25,13 +25,15 @@
     <section>
       <div class="row">
         <div class="col-xs-12 linha-acoes">
-          <input
-            type="color"
-            id="html5colorpicker"
-            [formControl]="colorControl"
-            value="#ff0000"
-            [disabled]="!objetoSelecionado"
-          />
+          <div *ngIf="objetoSelecionado">
+            <input
+              type="color"
+              id="html5colorpicker"
+              *ngFor="let colorControl of objects[currentTarget].colorControls"
+              [formControl]="colorControl"
+              [disabled]="!objetoSelecionado"
+            />
+          </div>
           <button
             [disabled]="!objetoSelecionado"
             mat-raised-button
@@ -54,7 +56,7 @@
             color="primary"
             (click)="destroy()"
           >
-            Apagar objeto
+            Erase
           </button>
         </div>
         <div class="col-xs-12"><div id="container"></div></div>
