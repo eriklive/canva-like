@@ -5,16 +5,32 @@
         <section>
           <div class="row">
             <div class="col-xs-12 selectors-images">
-              <img
-                src="assets/svgs/shield-one.svg"
-                alt=""
-                (click)="add('ESCUDO')"
-              />
-              <img
-                src="assets/svgs/google-g-logo.svg"
-                alt=""
-                (click)="add('GOOGLE')"
-              />
+              <div class="row">
+                <div class="col-xs-12 col-md-4">
+                  <mat-card matRipple (click)="add('ESCUDO')">
+                    <mat-card-content>
+                      <img
+                        width="100"
+                        height="100"
+                        src="assets/svgs/shield-one.svg"
+                        alt=""
+                      />
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <mat-card matRipple (click)="add('GOOGLE')">
+                    <mat-card-content>
+                      <img
+                        width="100"
+                        height="100"
+                        src="assets/svgs/google-g-logo.svg"
+                        alt=""
+                      />
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
             </div>
             <div class="col-xs-12">
               <button

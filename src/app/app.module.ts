@@ -10,11 +10,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+import { MatRippleModule } from '@angular/material/core';
+import { MatCardModule } from '@angular/material/card';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     MatButtonModule,
+    MatRippleModule,
+    MatCardModule,
     MatSidenavModule,
     MatIconModule,
     FormsModule,
