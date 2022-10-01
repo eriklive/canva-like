@@ -1,14 +1,15 @@
 import { FormControl } from '@angular/forms';
 import Konva from 'konva';
-
+import { CLASSES_TYPES_ENUM } from './ClassesTypes.enum';
 export default class KonvaDefault {
   private _layer: Konva.Layer = new Konva.Layer();
   private _objects: Array<Konva.Path | Konva.Text> = [];
   private _colors: Array<FormControl> = [];
+  private _type: CLASSES_TYPES_ENUM = CLASSES_TYPES_ENUM.OBJECT;
+  private _text: FormControl = new FormControl('Simple Text');
 
   addLayer(layer: Konva.Layer) {
     this._layer = layer;
-    console.log(layer);
 
     if (layer.hasChildren()) {
       layer.children?.forEach((child, childIndex) => {
@@ -22,7 +23,7 @@ export default class KonvaDefault {
     }
   }
 
-  addObject(object: Konva.Path | Konva.Text) {
+  public addObject(object: Konva.Path | Konva.Text) {
     this._objects.push(object);
   }
 
@@ -36,6 +37,18 @@ export default class KonvaDefault {
 
   public get colorControls() {
     return this._colors;
+  }
+
+  public get type() {
+    return this._type;
+  }
+
+  public set type(type: CLASSES_TYPES_ENUM) {
+    this._type = type;
+  }
+
+  public get textControl() {
+    return this._text;
   }
 
   private _changeColor(color: string, childIndex: number) {

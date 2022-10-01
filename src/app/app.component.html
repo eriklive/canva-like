@@ -36,7 +36,7 @@
         </section>
       </mat-tab>
       <mat-tab label="Text">
-        <button mat-raised-button color="primary" (click)="addText()">
+        <button mat-raised-button color="primary" (click)="add('TEXT')">
           add text
         </button>
       </mat-tab>
@@ -46,17 +46,24 @@
     <section>
       <div class="row">
         <div class="col-xs-12 linha-acoes">
-          <div *ngIf="objetoSelecionado">
+          <div *ngIf="selectedObject && showTextControl">
+            <input
+              type="text"
+              [formControl]="selectedObject.textControl"
+              [disabled]="!isSomethingSelected"
+            />
+          </div>
+
+          <div *ngIf="isSomethingSelected">
             <input
               type="color"
-              id="html5colorpicker"
-              *ngFor="let colorControl of objects[currentTarget].colorControls"
+              *ngFor="let colorControl of selectedObject?.colorControls"
               [formControl]="colorControl"
-              [disabled]="!objetoSelecionado"
+              [disabled]="!isSomethingSelected"
             />
           </div>
           <button
-            [disabled]="!objetoSelecionado"
+            [disabled]="!isSomethingSelected"
             mat-raised-button
             color="primary"
             (click)="moveDown()"
@@ -64,7 +71,7 @@
             <mat-icon>expand_more</mat-icon>
           </button>
           <button
-            [disabled]="!objetoSelecionado"
+            [disabled]="!isSomethingSelected"
             mat-raised-button
             color="primary"
             (click)="moveUp()"
@@ -72,7 +79,7 @@
             <mat-icon>expand_less</mat-icon>
           </button>
           <button
-            [disabled]="!objetoSelecionado"
+            [disabled]="!isSomethingSelected"
             mat-raised-button
             color="primary"
             (click)="destroy()"
