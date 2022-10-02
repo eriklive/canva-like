@@ -1,0 +1,136 @@
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <mat-tab-group>
+      <mat-tab label="Figures">
+        <section>
+          <div class="row">
+            <div class="col-xs-12 selectors-images">
+              <div class="row">
+                <div class="col-xs-12 col-md-4" *ngFor="let shape of shapes">
+                  <mat-card
+                    matRipple
+                    (click)="add(shape.name)"
+                    class="selectors-cards"
+                  >
+                    <mat-card-content>
+                      <img
+                        width="100"
+                        height="100"
+                        [src]="shape.imageFileSrc"
+                        alt=""
+                      />
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="download()"
+              >
+                Log JSON
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="exportImage()"
+              >
+                download
+              </button>
+            </div>
+          </div>
+        </section>
+      </mat-tab>
+      <mat-tab label="Text">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="add(shapesEnum.TEXT)"
+        >
+          Add text
+        </button>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-drawer>
+  <mat-drawer-content>
+    <section>
+      <div class="row">
+        <div class="col-xs-12 col-md-8">
+          <div class="col-xs-12"><div id="container"></div></div>
+          <div class="col-xs-12">
+            <button
+              [disabled]="layers.length === 0"
+              mat-raised-button
+              color="primary"
+              (click)="resetCanva()"
+            >
+              Limpar tela
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <mat-card *ngIf="isSomethingSelected">
+            <div>
+              <input
+                type="color"
+                *ngFor="let colorControl of selectedObject?.colorControls"
+                [formControl]="colorControl"
+                [disabled]="!isSomethingSelected"
+              />
+            </div>
+            <button
+              [disabled]="!isSomethingSelected"
+              mat-raised-button
+              color="primary"
+              (click)="moveDown()"
+            >
+              <mat-icon>expand_more</mat-icon>
+            </button>
+            <button
+              [disabled]="!isSomethingSelected"
+              mat-raised-button
+              color="primary"
+              (click)="moveUp()"
+            >
+              <mat-icon>expand_less</mat-icon>
+            </button>
+            <button
+              [disabled]="!isSomethingSelected"
+              mat-raised-button
+              color="primary"
+              (click)="destroy()"
+            >
+              Erase
+            </button>
+          </mat-card>
+          <mat-card *ngIf="selectedObject && showTextControl">
+            <mat-card-content>
+              <div class="row">
+                <mat-form-field appearance="fill" class="col-xs-12">
+                  <mat-label>Texto</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    [formControl]="selectedObject.textControl"
+                    [disabled]="!isSomethingSelected"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col-xs-12">
+                  <mat-label>Fonts</mat-label>
+                  <mat-select [formControl]="selectedObject.fontControl">
+                    <mat-option *ngFor="let font of fonts" [value]="font">
+                      {{ font }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </section>
+  </mat-drawer-content>
+</mat-drawer-container>

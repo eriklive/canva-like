@@ -28,3 +28,9 @@ body {
     background-color: #fff !important;
   }
 }
+
+.mat-tab-group,
+.mat-tab-body-wrapper {
+  display: block;
+  height: 100%;
+}

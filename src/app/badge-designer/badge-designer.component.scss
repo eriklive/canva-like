@@ -1,0 +1,50 @@
+section,
+.mat-drawer-container {
+  background-color: #424242;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#container {
+  background-color: #fff;
+  display: block;
+  width: fit-content;
+  margin: 20px auto;
+  border-radius: 12px;
+}
+
+.escudo {
+  fill: red;
+}
+
+button {
+  margin: 4px;
+}
+
+.linha-acoes {
+  height: 100px;
+}
+
+.selectors-images {
+  & > img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+  }
+}
+
+.selectors-cards {
+  height: 140px;
+  width: 140px;
+  display: block;
+}
+
+.mat-card {
+  margin: 4px;
+}
+
+.mat-drawer {
+  width: 500px;
+  display: block;
+}

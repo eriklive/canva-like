@@ -15,9 +15,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BadgeDesignerComponent } from './badge-designer/badge-designer.component';
+import { CertificateDesignerComponent } from './certificate-designer/certificate-designer.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BadgeDesignerComponent, CertificateDesignerComponent],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
