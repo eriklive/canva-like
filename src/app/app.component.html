@@ -6,25 +6,17 @@
           <div class="row">
             <div class="col-xs-12 selectors-images">
               <div class="row">
-                <div class="col-xs-12 col-md-4">
-                  <mat-card matRipple (click)="add('ESCUDO')">
+                <div class="col-xs-12 col-md-4" *ngFor="let shape of shapes">
+                  <mat-card
+                    matRipple
+                    (click)="add(shape.name)"
+                    class="selectors-cards"
+                  >
                     <mat-card-content>
                       <img
                         width="100"
                         height="100"
-                        src="assets/svgs/shield-one.svg"
-                        alt=""
-                      />
-                    </mat-card-content>
-                  </mat-card>
-                </div>
-                <div class="col-xs-12 col-md-4">
-                  <mat-card matRipple (click)="add('GOOGLE')">
-                    <mat-card-content>
-                      <img
-                        width="100"
-                        height="100"
-                        src="assets/svgs/google-g-logo.svg"
+                        [src]="shape.imageFileSrc"
                         alt=""
                       />
                     </mat-card-content>
@@ -52,8 +44,12 @@
         </section>
       </mat-tab>
       <mat-tab label="Text">
-        <button mat-raised-button color="primary" (click)="add('TEXT')">
-          add text
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="add(shapesEnum.TEXT)"
+        >
+          Add text
         </button>
       </mat-tab>
     </mat-tab-group>
@@ -61,58 +57,78 @@
   <mat-drawer-content>
     <section>
       <div class="row">
-        <div class="col-xs-12 linha-acoes">
-          <div *ngIf="selectedObject && showTextControl">
-            <input
-              type="text"
-              [formControl]="selectedObject.textControl"
-              [disabled]="!isSomethingSelected"
-            />
+        <div class="col-xs-12 col-md-8">
+          <div class="col-xs-12"><div id="container"></div></div>
+          <div class="col-xs-12">
+            <button
+              [disabled]="layers.length === 0"
+              mat-raised-button
+              color="primary"
+              (click)="resetCanva()"
+            >
+              Limpar tela
+            </button>
           </div>
-
-          <div *ngIf="isSomethingSelected">
-            <input
-              type="color"
-              *ngFor="let colorControl of selectedObject?.colorControls"
-              [formControl]="colorControl"
-              [disabled]="!isSomethingSelected"
-            />
-          </div>
-          <button
-            [disabled]="!isSomethingSelected"
-            mat-raised-button
-            color="primary"
-            (click)="moveDown()"
-          >
-            <mat-icon>expand_more</mat-icon>
-          </button>
-          <button
-            [disabled]="!isSomethingSelected"
-            mat-raised-button
-            color="primary"
-            (click)="moveUp()"
-          >
-            <mat-icon>expand_less</mat-icon>
-          </button>
-          <button
-            [disabled]="!isSomethingSelected"
-            mat-raised-button
-            color="primary"
-            (click)="destroy()"
-          >
-            Erase
-          </button>
         </div>
-        <div class="col-xs-12"><div id="container"></div></div>
-        <div class="col-xs-12">
-          <button
-            [disabled]="layers.length === 0"
-            mat-raised-button
-            color="primary"
-            (click)="resetCanva()"
-          >
-            Limpar tela
-          </button>
+
+        <div class="col-md-4">
+          <mat-card *ngIf="isSomethingSelected">
+            <div>
+              <input
+                type="color"
+                *ngFor="let colorControl of selectedObject?.colorControls"
+                [formControl]="colorControl"
+                [disabled]="!isSomethingSelected"
+              />
+            </div>
+            <button
+              [disabled]="!isSomethingSelected"
+              mat-raised-button
+              color="primary"
+              (click)="moveDown()"
+            >
+              <mat-icon>expand_more</mat-icon>
+            </button>
+            <button
+              [disabled]="!isSomethingSelected"
+              mat-raised-button
+              color="primary"
+              (click)="moveUp()"
+            >
+              <mat-icon>expand_less</mat-icon>
+            </button>
+            <button
+              [disabled]="!isSomethingSelected"
+              mat-raised-button
+              color="primary"
+              (click)="destroy()"
+            >
+              Erase
+            </button>
+          </mat-card>
+          <mat-card *ngIf="selectedObject && showTextControl">
+            <mat-card-content>
+              <div class="row">
+                <mat-form-field appearance="fill" class="col-xs-12">
+                  <mat-label>Texto</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    [formControl]="selectedObject.textControl"
+                    [disabled]="!isSomethingSelected"
+                  />
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col-xs-12">
+                  <mat-label>Fonts</mat-label>
+                  <mat-select [formControl]="selectedObject.fontControl">
+                    <mat-option *ngFor="let font of fonts" [value]="font">
+                      {{ font }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </mat-card>
         </div>
       </div>
     </section>

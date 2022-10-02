@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
-import { CLASSES_TYPES_ENUM } from 'src/shared/classes/ClassesTypes.enum';
+import { CLASSES_TYPES_ENUM } from 'src/shared/enums/ClassesTypes.enum';
 import GoogleLogo from 'src/shared/classes/GoogleLogo';
 import KonvaDefault from 'src/shared/classes/KonvaDefault';
 import KonvaText from 'src/shared/classes/KonvaText';
 import Shield from 'src/shared/classes/Shield';
+import { FONTS_ARRAY } from 'src/shared/consts/Fonts.array';
+import { SHAPES_ARRAY, SHAPES_ENUM } from 'src/shared/consts/Shapes.array';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,10 @@ export class AppComponent implements AfterViewInit {
   public currentTarget: number = -1;
   public transformer = new Konva.Transformer();
   public indexes: number = 0;
+
+  public fonts = FONTS_ARRAY;
+  public shapes = SHAPES_ARRAY;
+  public shapesEnum = SHAPES_ENUM;
 
   ngAfterViewInit(): void {
     this.resetCanva();
@@ -58,24 +64,22 @@ export class AppComponent implements AfterViewInit {
     this.layers = [];
   }
 
-  public add(figureName: string) {
-    var object: KonvaDefault;
+  public add(figureName: SHAPES_ENUM) {
+    let object: KonvaDefault;
 
     switch (figureName) {
-      case 'ESCUDO':
+      case SHAPES_ENUM.SIMPLE_SHIELD_ONE:
         object = new Shield(this.indexes++);
         break;
-      case 'GOOGLE':
+      case SHAPES_ENUM.GOOGLE:
         object = new GoogleLogo(this.indexes++);
         break;
-      case 'TEXT':
+      case SHAPES_ENUM.TEXT:
         object = new KonvaText(this.indexes++);
         break;
       default:
         return;
     }
-
-    console.log(object);
 
     this.layers.push(object.layer);
     this.stage.add(object.layer);

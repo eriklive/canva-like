@@ -7,7 +7,7 @@ section,
 }
 
 #container {
-  background-color: #bdbdbd;
+  background-color: #fff;
   display: block;
   width: fit-content;
 }
@@ -30,4 +30,19 @@ button {
     height: 100px;
     margin: 10px;
   }
+}
+
+.selectors-cards {
+  height: 140px;
+  width: 140px;
+  display: block;
+}
+
+.mat-card {
+  margin: 4px;
+}
+
+.mat-drawer {
+  width: 500px;
+  display: block;
 }

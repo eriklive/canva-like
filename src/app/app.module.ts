@@ -12,21 +12,27 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatRippleModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatCardModule,
-    MatSidenavModule,
-    MatIconModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatTabsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BrowserModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatTabsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
