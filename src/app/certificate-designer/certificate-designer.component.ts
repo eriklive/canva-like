@@ -1,16 +1,15 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import Konva from 'konva';
 import { Layer } from 'konva/lib/Layer';
 import { CLASSES_TYPES_ENUM } from 'src/shared/enums/ClassesTypes.enum';
 import GoogleLogo from 'src/shared/classes/GoogleLogo';
 import KonvaDefault from 'src/shared/classes/KonvaDefault';
-import KonvaText, { AditionalTextConfig } from 'src/shared/classes/KonvaText';
+import KonvaText from 'src/shared/classes/KonvaText';
 import Shield from 'src/shared/classes/Shield';
 import { FONTS_ARRAY } from 'src/shared/consts/Fonts.array';
 import { SHAPES_ARRAY, SHAPES_ENUM } from 'src/shared/consts/Shapes.array';
-import KonvaLine from 'src/shared/classes/KonvalINE';
-import { LineConfig } from 'konva/lib/shapes/Line';
 import { DefaultCertificateTemplate } from 'src/shared/classes/DefaultCertificateTemplate';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-certificate-designer',
@@ -24,6 +23,7 @@ export class CertificateDesignerComponent implements AfterViewInit {
   public currentTarget: number = -1;
   public transformer = new Konva.Transformer();
   public indexes: number = 0;
+  public generalFont: FormControl = new FormControl();
 
   public fonts = FONTS_ARRAY;
   public shapes = SHAPES_ARRAY;
@@ -31,7 +31,12 @@ export class CertificateDesignerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.resetCanva();
-    this.test();
+    this.addCertificate();
+
+    this.generalFont.valueChanges.subscribe((value) => {
+      console.log(value);
+      this.objects.forEach((object) => object.fontControl.patchValue(value));
+    });
   }
 
   public get stage(): Konva.Stage {
@@ -56,16 +61,26 @@ export class CertificateDesignerComponent implements AfterViewInit {
     return this.selectedObject?.type === CLASSES_TYPES_ENUM.TEXT;
   }
 
-  public test() {
-    const certificate = new DefaultCertificateTemplate(
-      this.layers,
-      this.stage,
-      this.objects,
-      this.indexes,
-      this._configTransform
-    );
+  public addCertificate() {
+    const certificate = new DefaultCertificateTemplate(this);
 
     certificate.factory();
+  }
+
+  public addCertificateWithExample() {
+    this.resetCanva();
+
+    const certificate = new DefaultCertificateTemplate(this);
+
+    certificate.factory({
+      person_one: 'Joe Doe',
+      person_two: 'Jane doe',
+      date: '01/01/2022',
+      name: 'Mark hamill',
+      institution_name: 'Example institution',
+      description:
+        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo',
+    });
   }
 
   public resetCanva() {
@@ -102,10 +117,10 @@ export class CertificateDesignerComponent implements AfterViewInit {
     this.stage.add(object.layer);
     this.objects.push(object);
 
-    this._configTransform(object);
+    this.configTransform(object);
   }
 
-  private _configTransform(object: KonvaDefault) {
+  public configTransform(object: KonvaDefault) {
     const addTransformer = (e: any) => {
       if (this.currentTarget === -1) {
         // Callback para sempre que selecionarem uma forma, a gente pegar qual o id dado àquela forma

@@ -1,61 +1,57 @@
-import { Input } from '@angular/core';
 import Konva from 'konva';
 import { LineConfig } from 'konva/lib/shapes/Line';
 import KonvaDefault from './KonvaDefault';
 import KonvaText, { AditionalTextConfig } from './KonvaText';
-import KonvaLine from 'src/shared/classes/KonvalINE';
+import KonvaLine from 'src/shared/classes/KonvaLine';
+import { CertificateDesignerComponent } from 'src/app/certificate-designer/certificate-designer.component';
 
 class CertificateDefaultTemplateValues {
-  name: string = '[ NAME ]';
-  institution_name: string = '[ INSTITUTION NAME ]';
-  description: string = '[ DESCRIPTION ]';
-  person_one: string = '[ PERSON 1 ]';
-  person_two: string = '[ PERSON 2 ]';
-  date: string = '[ DATE ]';
+  name?: string = '[ NAME ]';
+  institution_name?: string = '[ INSTITUTION NAME ]';
+  description?: string = '[ DESCRIPTION ]';
+  person_one?: string = '[ PERSON 1 ]';
+  person_two?: string = '[ PERSON 2 ]';
+  date?: string = '[ DATE ]';
 }
 
 const certificate_height = 500;
 const certificate_width = 1000;
 
 export class DefaultCertificateTemplate {
-  public layers: Array<Konva.Layer> = [];
-  public stage: any;
-  public objects: Array<KonvaDefault | KonvaText> = [];
-  public indexes: number = 0;
-  public configTransform: any;
+  // public layers: Array<Konva.Layer> = [];
+  // public stage: any;
+  // public objects: Array<KonvaDefault | KonvaText> = [];
+  // public indexes: number = 0;
+  // public configTransform: any;
+  public component: CertificateDesignerComponent;
 
-  constructor(
-    layers: Array<Konva.Layer>,
-    stage: any,
-    objects: Array<KonvaDefault | KonvaText>,
-    indexes: number,
-    configTransform: any
-  ) {
-    this.layers = layers;
-    this.stage = stage;
-    this.objects = objects;
-    this.indexes = indexes;
-    this.configTransform = configTransform;
+  constructor(component: CertificateDesignerComponent) {
+    this.component = component;
+    // this.layers = layers;
+    // this.stage = stage;
+    // this.objects = objects;
+    // this.indexes = indexes;
+    // this.configTransform = configTransform;
   }
 
   private _addText(data: AditionalTextConfig): void {
-    let text: KonvaDefault = new KonvaText(this.indexes++, data);
+    let text: KonvaDefault = new KonvaText(this.component.indexes++, data);
 
-    this.layers.push(text.layer);
-    this.stage.add(text.layer);
-    this.objects.push(text);
+    this.component.layers.push(text.layer);
+    this.component.stage.add(text.layer);
+    this.component.objects.push(text);
 
-    this.configTransform(text);
+    this.component.configTransform(text);
   }
 
   private _addLine(config?: LineConfig): void {
-    const object = new KonvaLine(this.indexes++, config);
+    const object = new KonvaLine(this.component.indexes++, config);
 
-    this.layers.push(object.layer);
-    this.stage.add(object.layer);
-    this.objects.push(object);
+    this.component.layers.push(object.layer);
+    this.component.stage.add(object.layer);
+    this.component.objects.push(object);
 
-    this.configTransform(object);
+    this.component.configTransform(object);
   }
 
   public factory(
@@ -82,7 +78,7 @@ export class DefaultCertificateTemplate {
         align: 'center',
         fontSize: 40,
       },
-      text: '[ NAME ]',
+      text: seed.name,
     });
 
     // institution
