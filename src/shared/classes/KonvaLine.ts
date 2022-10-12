@@ -1,46 +1,31 @@
 import Konva from 'konva';
-import { TextConfig } from 'konva/lib/shapes/Text';
+import { LineConfig } from 'konva/lib/shapes/Line';
 import { CLASSES_TYPES_ENUM } from '../enums/ClassesTypes.enum';
 import KonvaDefault from './KonvaDefault';
 
-export interface AditionalTextConfig {
-  config: TextConfig;
-  text?: string;
-}
-
-export default class KonvaText extends KonvaDefault {
-  constructor(
-    id: number,
-    options: AditionalTextConfig = {
-      config: { x: 2, y: 15 },
-      text: 'Simple Text',
-    }
-  ) {
+export default class KonvaLine extends KonvaDefault {
+  constructor(id: number, config?: LineConfig) {
     super();
 
-    this.textControl.patchValue(options.text);
-
-    const text = new Konva.Text({
-      x: options.config.x,
-      y: options.config.y,
-      text: this.textControl.value,
-      fontSize: 30,
-      fontFamily: this.fontControl.value,
-      fill: '#fffff',
-      draggable: false,
+    var line = new Konva.Line({
+      points: [5, 5, 100, 5],
+      stroke: 'black',
+      strokeWidth: 5,
+      lineCap: 'round',
+      lineJoin: 'round',
       id: id.toString(),
-      ...options.config,
+      ...config,
     });
 
     this.addLayer(
       new Konva.Layer({
         draggable: true,
-      }).add(text)
+      }).add(line)
     );
 
-    this.addObject(text);
+    this.addObject(line);
 
-    this.type = CLASSES_TYPES_ENUM.TEXT;
+    this.type = CLASSES_TYPES_ENUM.LINE;
 
     this._configureControls();
   }
